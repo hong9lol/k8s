@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: my-nginx-container
+          image: nginx:latest
+          resizePolicy:
+            - resourceName: "memory"
+              restartPolicy: "RestartContainer"
+          resources:
+            limits:
+              cpu: "400m"
+              memory: "800Mi"
+            requests:
+              cpu: "100m"
+              memory: "800Mi"
+          ports:
+            - containerPort: 80
+              protocol: TCP
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: my-nginx-pod
+# spec:
+#   containers:
+#     - name: my-nginx-container
+#       image: nginx:latest
+#       resizePolicy:
+#         - resourceName: "memory"
+#           restartPolicy: "RestartContainer"
+#       resources:
+#         limits:
+#           cpu: "400m"
+#           memory: "500Mi"
+#         requests:
+#           cpu: "100m"
+#           memory: "200Mi"
+#       ports:
+#         - containerPort: 80
+#           protocol: TCP
